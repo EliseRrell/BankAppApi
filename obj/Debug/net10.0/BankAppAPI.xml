@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BankAppAPI</name>
+    </assembly>
+    <members>
+        <member name="M:BankAppAPI.Controllers.AuthController.Login(BankAppAPI.Dtos.LoginDto)">
+            <summary>
+            Authenticates a user, generates a JWT token.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.Register(BankAppAPI.Dtos.RegisterDto)">
+            <summary>
+            Registers a new customer with user/bank account and disposition.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.IssueLoan(BankAppAPI.Dtos.IssueLoanDto)">
+            <summary>
+            Issues a new loan to a customer.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.UpdateUser(System.String,BankAppAPI.Dtos.UpdateUserDto)">
+            <summary>
+            Updates an existing user's email and/or password.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.GetUser(System.String)">
+            <summary>
+            Retrieves a user's basic information including their role.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.GetUserByEmail(System.String)">
+            <summary>
+            Retrieves a user's basic information by email.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.AuthController.GetCustomerWithAccounts(System.Int32)">
+            <summary>
+            Retrieves customer information with accounts, loans, and transactions.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.#ctor(BankAppAPI.Data.BankAppDataContext)">
+            <summary>
+            Initializes a new instance of the CustomerAccountsController.
+            </summary>
+            <param name="db">The database context for bank application data.</param>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.GetMyAccounts">
+            <summary>
+            Retrieves all bank accounts for customer.
+            </summary>
+            <returns>
+            An object containing customer information, total account count, total balance,
+            and a list of all accounts with their details.
+            </returns>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.GetAccountTransactions(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Retrieves all transactions for a specific account.
+            </summary>
+            <param name="accountId">The ID of the account to retrieve transactions for.</param>
+            <param name="page">The page number (default is 1).</param>
+            <param name="pageSize">The number of transactions per page (default is 20).</param>
+            <returns>
+            Customer account details along with paginated list of transactions.
+            </returns>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.GetAccountDetails(System.Int32)">
+            <summary>
+            Retrieves detailed information for a specific account.
+            </summary>
+            <param name="accountId">The ID of the account to retrieve details for.</param>
+            <returns>
+            Fetches detailed account information including account type, balance, disposition type. 
+            Also includes total transactions, active loans, and recent transactions.
+            </returns>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.CreateAccount(BankAppAPI.Dtos.CreateAccountDto)">
+            <summary>
+            Creates a new bank account.
+            </summary>
+            <returns>The newly created account details.</returns>
+            <remarks>
+            Creates a new account and links it to the customer as the owner with zero initial balance. Also uses a transaction to ensure data consistency.
+            </remarks>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.TransferMoney(BankAppAPI.Dtos.TransferDto)">
+            <summary>
+            Transfers money between bank accounts.
+            </summary>
+            <remarks>
+            Endpoint that creates two transaction records: a debit for the source account and a credit for the destination account.
+            <param>The destination account does not need to be owned by the authenticated customer.</param>
+            <param>The response indicates whether the transfer is the same customer or a different customer.</param>
+            </remarks>
+        </member>
+        <member name="M:BankAppAPI.Controllers.CustomerAccountsController.GetAvailableAccountTypes">
+            <summary>
+            Retrieves all available account types offered.
+            </summary>
+            <returns>A list of all account types with their IDs, names, and descriptions.</returns>
+            <remarks>
+            Endpoint that requires authentication but does not require a specific role.
+            It provides information about bank acount types.
+            </remarks>
+        </member>
+        <member name="P:BankAppAPI.Dtos.RegisterExistingCustomerDto.Password">
+            Password for the new user account.
+        </member>
+        <member name="T:BankAppAPI.Services.AuthService">
+            <summary>
+            Service implementation for authentication and user management operations.
+            </summary>
+        </member>
+        <member name="T:BankAppAPI.Services.IAuthService">
+            <summary>
+            Service interface for authentication and user management operations.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.LoginAsync(BankAppAPI.Dtos.LoginDto)">
+            <summary>
+            Authenticates a user and generates a JWT token.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.RegisterCustomerAsync(BankAppAPI.Dtos.RegisterDto)">
+            <summary>
+            Registers a new customer with user account and disposition.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.IssueLoanAsync(BankAppAPI.Dtos.IssueLoanDto)">
+            <summary>
+            Issues a new loan to a customer and credits their account.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.UpdateUserAsync(System.String,BankAppAPI.Dtos.UpdateUserDto)">
+            <summary>
+            Updates an existing user's email and/or password.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.GetUserByIdAsync(System.String)">
+            <summary>
+            Retrieves a user's information by user ID.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.GetUserByEmailAsync(System.String)">
+            <summary>
+            Retrieves a user's information by email address.
+            </summary>
+        </member>
+        <member name="M:BankAppAPI.Services.IAuthService.GetCustomerWithAccountsAsync(System.Int32)">
+            <summary>
+            Retrieves complete customer information with accounts, loans, and transactions.
+            </summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../Blog_Assignment/Blog_Assignment/Blog_Assignment.csproj" />
+  <Project Path="BankAppAPI.csproj" />
+</Solution>
